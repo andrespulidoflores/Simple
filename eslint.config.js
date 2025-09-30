@@ -1,16 +1,20 @@
-// .eslintrc.js (CommonJS)
-const js = require("@eslint/js");
-const globals = require("globals");
+import { js } from '@eslint/js';
 
-module.exports = [
+export default [
+  js, // the built-in ESLint recommended rules for JS
   {
-    files: ["**/*.{js,mjs,cjs}"],
-    plugins: { js },
-    extends: ["js/recommended"],
-    languageOptions: { globals: globals.browser },
-  },
-  {
-    files: ["**/*.js"],
-    languageOptions: { sourceType: "script" }, // CommonJS
+    ignores: ['build/**', 'node_modules/**'], // ignore build and dependencies
+    rules: {
+      semi: ['error', 'always'],        // require semicolons
+      quotes: ['error', 'single'],      // single quotes
+      'no-undef': 'error',              // undefined variables
+    },
+    globals: {
+      process: 'readonly',              // for process.env in Node
+    },
+    env: {
+      node: true,
+      es2021: true,
+    },
   },
 ];
