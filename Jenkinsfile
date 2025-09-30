@@ -43,7 +43,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running automated tests'
-                bat 'npm test'
+                bat 'npx jest'
             }
         }
 
