@@ -1,16 +1,16 @@
+// .eslintrc.js (CommonJS)
 const js = require("@eslint/js");
 const globals = require("globals");
-const { defineConfig } = require("eslint/config");
 
-module.exports = defineConfig([
+module.exports = [
   {
     files: ["**/*.{js,mjs,cjs}"],
     plugins: { js },
     extends: ["js/recommended"],
-    languageOptions: { globals: globals.browser }
+    languageOptions: { globals: globals.browser },
   },
   {
     files: ["**/*.js"],
-    languageOptions: { sourceType: "commonjs" }
-  }
-]);
+    languageOptions: { sourceType: "script" }, // CommonJS
+  },
+];
