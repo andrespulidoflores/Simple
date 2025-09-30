@@ -1,0 +1,16 @@
+# Node modules (reinstalled in Docker)
+node_modules
+
+# Build artifacts
+build
+
+# Logs
+*.log
+
+# Git files
+.git
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db

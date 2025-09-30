@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    environment {
+        NODE_ENV = 'production'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                echo 'Installing npm dependencies'
+                bat 'npm ci'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building and creating artifact (ZIP)'
+                bat '''
+                REM create build folder
+                if not exist build mkdir build
+                REM copy minimal runtime files (adjust as needed)
+                xcopy package.json build /Y
+                if exist index.js xcopy index.js build /Y
+                if exist src xcopy src build /E /I /Y
+                if exist tests xcopy tests build /E /I /Y
+                if exist Jenkinsfile xcopy Jenkinsfile build /Y
+                REM compress build folder into an artifact zip
+                powershell -Command "Compress-Archive -Path build\\* -DestinationPath build\\artifact.zip -Force"
+                '''
+                //archiving artifact so Jenkins stores it with the build
+                archiveArtifacts artifacts: 'build/artifact.zip', fingerprint: true
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo '(Test stage placeholder)'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo '(Deploy stage placeholder)'
+            }
+        }
+    }
+
+    post {
+        always { echo 'Pipeline finished' }
+    }
+}
