@@ -51,7 +51,7 @@ pipeline {
         stage('Code Quality') {
     steps {
         echo 'Running code quality analysis'
-        bat "npx eslint --config .eslintrc.js ."
+        bat "npx eslint --config eslint.config.js ."
     }
 }
 
