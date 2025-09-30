@@ -87,22 +87,6 @@ pipeline {
     }
 }
 
-        stage('Monitor') {
-    steps {
-        echo "Triggering New Relic monitoring and alert checks"
-        withCredentials([string(credentialsId: 'newrelic-license', variable: 'NR_LICENSE')]) {
-            bat """
-            REM Report deployment to New Relic
-            newrelic deployments create --appName 'jenkins-node-demo' --revision ${GIT_COMMIT} --licenseKey %NR_LICENSE%
-            
-            REM Optional: Check for active alert violations
-            newrelic alerts violations list --licenseKey %NR_LICENSE%
-            """
-        }
-    }
-}
-
-
     }
 
     post {
