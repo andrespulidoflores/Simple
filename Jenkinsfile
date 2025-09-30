@@ -14,12 +14,13 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                echo 'Installing npm dependencies'
-                bat 'npm ci'
-            }
-        }
+       stage('Install Dependencies') {
+    steps {
+        echo 'Installing npm dependencies including devDependencies'
+        bat 'npm ci --include=dev'
+    }
+}
+
 
         stage('Build') {
             steps {
@@ -48,11 +49,11 @@ pipeline {
         }
 
         stage('Code Quality') {
-            steps {
-                echo 'Running code quality analysis'
-                bat 'npm run lint'
-            }
-        }
+    steps {
+        echo 'Running code quality analysis'
+        bat 'npx eslint .'
+    }
+}
 
         stage('Security') {
             steps {
